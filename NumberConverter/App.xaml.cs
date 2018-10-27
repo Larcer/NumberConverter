@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using Nameless.NumberConverter.Managers;
 
 namespace Nameless.NumberConverter
 {
@@ -10,7 +11,7 @@ namespace Nameless.NumberConverter
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-
+            NavigationManager.Instance.Navigate(WindowMode.SignIn);
         }
     }
 }

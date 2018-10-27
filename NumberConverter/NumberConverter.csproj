@@ -60,10 +60,18 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Data\DBManager.cs" />
+    <Compile Include="Managers\MessageManager.cs" />
+    <Compile Include="Managers\NavigationManager.cs" />
+    <Compile Include="Managers\SessionManager.cs" />
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Services\SignInService.cs" />
     <Compile Include="Tools\Encrypting.cs" />
+    <Compile Include="Tools\PasswordBoxAssistant.cs" />
+    <Compile Include="Tools\RelayCommand.cs" />
     <Compile Include="Tools\SingletonBase.cs" />
+    <Compile Include="ViewModels\Authentication\SignInViewModel.cs" />
+    <Compile Include="ViewModels\Core\NotifiableViewModel.cs" />
     <Compile Include="Views\SignInView.xaml.cs">
       <DependentUpon>SignInView.xaml</DependentUpon>
     </Compile>

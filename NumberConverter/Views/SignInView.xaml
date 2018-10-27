@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:t="clr-namespace:Nameless.NumberConverter.Tools"
         mc:Ignorable="d"
         Height="200" MinHeight="182" MaxHeight="220" MinWidth="200" Width="300" MaxWidth="520"
         >
@@ -18,13 +19,15 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1" HorizontalAlignment="Center" VerticalAlignment="Center"
-                              Name="LoginLabel">Login</Label>
+               Name="LoginLabel">Login</Label>
         <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" 
-                              Name="Login" Margin="10" Grid.RowSpan="1" ></TextBox>
+                 Name="Login" Margin="10" Grid.RowSpan="1" Text="{Binding Login, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></TextBox>
         <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" HorizontalAlignment="Center" VerticalAlignment="Center"
-                              Name="PasswordLabel">Password</Label>
+               Name="PasswordLabel">Password</Label>
         <PasswordBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" 
-                                Name="Password" Margin="10" Grid.RowSpan="1" ></PasswordBox>
+                     Name="Password" Margin="10" Grid.RowSpan="1" 
+                     t:PasswordBoxAssistant.BindPassword="True"
+                     t:PasswordBoxAssistant.BoundPassword="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></PasswordBox>
 
         <Button Grid.Row="2" Grid.Column="0" Content="Log in" HorizontalAlignment="Center" VerticalAlignment="Center" Width="75" Command="{Binding SignInCommand}"/>
         <Button Grid.Row="2" Grid.Column="1" Content="Sign up" HorizontalAlignment="Center" VerticalAlignment="Center" Width="75" Command="{Binding SignUpCommand}" />
