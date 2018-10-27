@@ -7,6 +7,7 @@ using Nameless.NumberConverter.Windows;
 
 namespace Nameless.NumberConverter.Managers
 {
+    // The application windows modes (basically their names)
     public enum WindowMode
     {
         SignIn,
@@ -14,9 +15,12 @@ namespace Nameless.NumberConverter.Managers
         NumberConverter
     }
 
+    // Handles navigation between windows
     public class NavigationManager : SingletonBase<NavigationManager>
     {
+        // The content window to place windows in
         private readonly ContentWindow _contentWindow;
+        // The list of application views
         private readonly IDictionary<WindowMode, ContentControl> _views;
 
         private NavigationManager()
@@ -26,6 +30,7 @@ namespace Nameless.NumberConverter.Managers
             _views = InitializeDictionary();
         }
 
+        // Navigates to the specified view
         public void Navigate(WindowMode mode)
         {
             // The window with given name should exist in the dictionary

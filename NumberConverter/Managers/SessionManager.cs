@@ -13,14 +13,13 @@ namespace NumberConverter.Managers
         {
 
         }
-
-        // Starts user session
+        
         public void StartSession(User user)
         {
             Debug.Assert(user != null);
             CurrentUser = user;
         }
-
+        
         public void EndSession()
         {
             CurrentUser = null;

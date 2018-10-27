@@ -22,7 +22,7 @@ namespace NumberConverter.Services
                 return false;
             }
 
-            /* Check login existence first */
+            /* Check login existence */
             if (DBManager.Instance.UserExists(user.Login))
             {
                 MessageManager.UserMessage(string.Format(
@@ -36,6 +36,7 @@ namespace NumberConverter.Services
             return true;
         }
 
+        // Checks that all fields are not null. Debug only
         private void CheckNotNullFields(User user)
         {
             Debug.Assert(!IsNull(user));
@@ -46,6 +47,7 @@ namespace NumberConverter.Services
             Debug.Assert(!IsNull(user.Password));
         }
 
+        // Returns true if the specified string is a valid email
         private bool EmailIsValid(string email)
         {
             return new EmailAddressAttribute().IsValid(email);

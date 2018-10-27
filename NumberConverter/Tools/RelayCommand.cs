@@ -3,6 +3,7 @@ using System.Windows.Input;
 
 namespace Nameless.NumberConverter.Tools
 {
+    // Represents an application command
     public class RelayCommand : ICommand
     {
         private Predicate<object> _canExecute;

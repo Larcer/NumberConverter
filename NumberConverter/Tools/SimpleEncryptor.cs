@@ -4,6 +4,7 @@ using System.Text;
 
 namespace NumberConverter.Tools
 {
+    // Represents a simple md5 encryptor
     public static class SimpleEncryptor
     {
         public static string EncryptText(string text)

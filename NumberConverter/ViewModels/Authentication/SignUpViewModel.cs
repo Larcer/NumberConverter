@@ -20,8 +20,11 @@ namespace Nameless.NumberConverter.ViewModels.Authentication
         private string _email;
         private string _password;
 
+        // Navigates back to the login window
         private ICommand _backCommand;
+        // Performs user registration
         private ICommand _signUpCommand;
+        // Stops the application
         private ICommand _closeCommand;
 
 
@@ -120,6 +123,7 @@ namespace Nameless.NumberConverter.ViewModels.Authentication
             Environment.Exit(1);
         }
 
+        // Clears all text boxes in the current window
         private void ClearTextBoxes()
         {
             FirstName = LastName = Login = Email = Password = string.Empty;

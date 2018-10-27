@@ -14,8 +14,11 @@ namespace Nameless.NumberConverter.ViewModels.Authentication
         private string _login;
         private string _password;
 
+        // Stops the application
         private ICommand _closeCommand;
+        // Performs user authentication
         private ICommand _signInCommand;
+        // Navigates to sign up window
         private ICommand _signUpCommand;
 
 
@@ -74,6 +77,7 @@ namespace Nameless.NumberConverter.ViewModels.Authentication
             NavigationManager.Instance.Navigate(WindowMode.SignUp);
         }
 
+        // Clears all text boxes in the current window
         private void ClearTextBoxes()
         {
             Login = Password = string.Empty;
