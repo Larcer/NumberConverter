@@ -75,6 +75,9 @@
     <Compile Include="ViewModels\Authentication\SignInViewModel.cs" />
     <Compile Include="ViewModels\Authentication\SignUpViewModel.cs" />
     <Compile Include="ViewModels\Core\NotifiableViewModel.cs" />
+    <Compile Include="Views\NumberConverterView.xaml.cs">
+      <DependentUpon>NumberConverterView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SignInView.xaml.cs">
       <DependentUpon>SignInView.xaml</DependentUpon>
     </Compile>
@@ -112,6 +115,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\NumberConverterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SignInView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
