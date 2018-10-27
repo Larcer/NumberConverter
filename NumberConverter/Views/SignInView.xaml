@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="NumberConverter.Views.SignInView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NumberConverter.Views"
+        mc:Ignorable="d"
+        Height="200" MinHeight="182" MaxHeight="220" MinWidth="200" Width="300" MaxWidth="520"
+        >
+    <Grid Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+                              Name="LoginLabel">Login</Label>
+        <TextBox Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" 
+                              Name="Login" Margin="10" Grid.RowSpan="1" ></TextBox>
+        <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+                              Name="PasswordLabel">Password</Label>
+        <PasswordBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" 
+                                Name="Password" Margin="10" Grid.RowSpan="1" ></PasswordBox>
+
+        <Button Grid.Row="2" Grid.Column="0" Content="Log in" HorizontalAlignment="Center" VerticalAlignment="Center" Width="75" Command="{Binding SignInCommand}"/>
+        <Button Grid.Row="2" Grid.Column="1" Content="Sign up" HorizontalAlignment="Center" VerticalAlignment="Center" Width="75" Command="{Binding SignUpCommand}" />
+        <Button Grid.Row="2" Grid.Column="2" Content="Close" HorizontalAlignment="Center" VerticalAlignment="Center" Width="75" Command="{Binding CloseCommand}"/>
+    </Grid>
+</UserControl>
