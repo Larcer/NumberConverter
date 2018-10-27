@@ -36,12 +36,14 @@ namespace Nameless.NumberConverter.Services
 
                 /* Everything is ok, login user */
                 SessionManager.Instance.StartSession(currentUser);
+                SaveLastLoginDate(currentUser);
                 MessageManager.UserMessage(Resources.SignIn_LoginSuccess);
             }
             catch (CryptographicException ce)
             {
                 MessageManager.UserMessage(string.Format(Resources.SignIn_FailedToDecryptPassword,
                     Environment.NewLine, ce.Message));
+                MessageManager.UserMessage(ce.StackTrace);
 
                 // Log the message into some error.log file
 
@@ -49,6 +51,11 @@ namespace Nameless.NumberConverter.Services
             }
 
             return true;
+        }
+
+        private void SaveLastLoginDate(User user)
+        {
+            user.LastLoginDateTime = DateTime.Now;
         }
     }
 }

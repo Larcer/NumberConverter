@@ -58,7 +58,10 @@ namespace Nameless.NumberConverter.ViewModels.Authentication
         {
             bool success = _service.LoginUser(_login, _password);
             if (success)
+            {
                 NavigationManager.Instance.Navigate(WindowMode.NumberConverter);
+                ClearTextBoxes();
+            }
         }
 
         private bool SignInCanExecute(object o)
@@ -69,6 +72,11 @@ namespace Nameless.NumberConverter.ViewModels.Authentication
         private void SignUpExecute(object o)
         {
             NavigationManager.Instance.Navigate(WindowMode.SignUp);
+        }
+
+        private void ClearTextBoxes()
+        {
+            Login = Password = string.Empty;
         }
     }
 }

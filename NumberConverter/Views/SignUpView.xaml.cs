@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using Nameless.NumberConverter.ViewModels.Authentication;
 
 namespace Nameless.NumberConverter.Views
 {
@@ -10,6 +11,7 @@ namespace Nameless.NumberConverter.Views
         public SignUpView()
         {
             InitializeComponent();
+            DataContext = new SignUpViewModel();
         }
     }
 }

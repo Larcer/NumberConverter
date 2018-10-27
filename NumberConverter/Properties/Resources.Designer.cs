@@ -95,5 +95,32 @@ namespace NumberConverter.Properties {
                 return ResourceManager.GetString("SignIn_UserDoesNotExist", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The email is not valid!.
+        /// </summary>
+        internal static string SignUp_EmailIsNotValid {
+            get {
+                return ResourceManager.GetString("SignUp_EmailIsNotValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The user with login &quot;{0}&quot; already exists!.
+        /// </summary>
+        internal static string SignUp_UserAlreadyExists {
+            get {
+                return ResourceManager.GetString("SignUp_UserAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The user with login &quot;{0}&quot; has been successfully created!.
+        /// </summary>
+        internal static string SignUp_UserSuccessfullyCreated {
+            get {
+                return ResourceManager.GetString("SignUp_UserSuccessfullyCreated", resourceCulture);
+            }
+        }
     }
 }

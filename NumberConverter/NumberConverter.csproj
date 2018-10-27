@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -66,11 +67,13 @@
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Services\SignInService.cs" />
-    <Compile Include="Tools\Encrypting.cs" />
+    <Compile Include="Services\SignUpService.cs" />
     <Compile Include="Tools\PasswordBoxAssistant.cs" />
     <Compile Include="Tools\RelayCommand.cs" />
+    <Compile Include="Tools\SimpleEncryptor.cs" />
     <Compile Include="Tools\SingletonBase.cs" />
     <Compile Include="ViewModels\Authentication\SignInViewModel.cs" />
+    <Compile Include="ViewModels\Authentication\SignUpViewModel.cs" />
     <Compile Include="ViewModels\Core\NotifiableViewModel.cs" />
     <Compile Include="Views\SignInView.xaml.cs">
       <DependentUpon>SignInView.xaml</DependentUpon>
