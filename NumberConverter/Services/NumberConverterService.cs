@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Nameless.NumberConverter.Models;
 using NumberConverter.Managers;
+using NumberConverter.Properties;
 
 namespace NumberConverter.Services
 {
@@ -32,20 +33,20 @@ namespace NumberConverter.Services
             }
             catch (OverflowException)
             {
-                MessageManager.UserMessage("The number should not be between " + uint.MinValue + " and " + uint.MaxValue);
+                MessageManager.UserMessage(string.Format(Resources.NumberConverter_NumberOutOfRange, uint.MinValue, uint.MaxValue));
             }
             catch (FormatException)
             {
-                MessageManager.UserMessage("Type in the positive integer arabic number");
+                MessageManager.UserMessage(Resources.NumberConverter_PositiveIntegerNumber);
             }
 
             return false;
         }
 
-        public string ExecuteConvertion(uint number)
+        public string ExecuteConvertion(uint number, out Request request)
         {
             string romanRepresentation = ToRoman(number);
-            Request request = new Request(number, romanRepresentation);
+            request = new Request(number, romanRepresentation);
             SessionManager.Instance.CurrentUser.Requests.Add(request);
             return romanRepresentation;
         }

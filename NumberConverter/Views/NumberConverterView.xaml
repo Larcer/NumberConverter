@@ -3,33 +3,71 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             mc:Ignorable="d" 
-             d:DesignHeight="250" d:DesignWidth="500">
-    <Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition />
-			<RowDefinition />
-			<RowDefinition />
-		</Grid.RowDefinitions>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition/>
-			<ColumnDefinition/>
-			<ColumnDefinition/>
-			<ColumnDefinition/>
-			<ColumnDefinition/>
-		</Grid.ColumnDefinitions>
-		<Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="1" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="31,0,52,0">Enter arabic number</Label>
-		<ScrollViewer Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="3" Margin="18,26,10,14" VerticalScrollBarVisibility="Auto">
+             mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="520">
+    <Grid Margin="0,0,0,10.8">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="1" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="31,0,52,0">Enter arabic number</Label>
+        <ScrollViewer Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="3" Margin="18,26,10,14" VerticalScrollBarVisibility="Auto">
             <TextBox Name="ArabicNumber" TextWrapping="Wrap" ToolTip="Enter arabic number" Text="{Binding ArabicNumber}" />
         </ScrollViewer>
         <Button Grid.Row="0" Grid.ColumnSpan="1" Grid.Column="2" Content="Convert"  VerticalAlignment="Center"  Command="{Binding ConvertNumberCommand}" Margin="10,30,10,10" Height="43" />
         <Button Grid.Row="1" Grid.ColumnSpan="1" Grid.Column="2"  VerticalAlignment="Center"  Command="{Binding ShowRequestsCommand}" Margin="10,30,10,10" Height="43">
             <TextBlock TextWrapping="WrapWithOverflow" Text="Previous requests"/>
         </Button>
-		<Button Grid.Row="2" Grid.ColumnSpan="1" Grid.Column="2" Content="Log out"  VerticalAlignment="Center"  Command="{Binding LogOutCommand}" Margin="10,30,10,10" Height="43"/>
-		<Label Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="1" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="50,0,58,0">Roman number</Label>
-		<ScrollViewer Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="3" Margin="18,26,10,14" VerticalScrollBarVisibility="Auto">
+        <Button Grid.Row="2" Grid.ColumnSpan="1" Grid.Column="2" Content="Log out"  VerticalAlignment="Center"  Command="{Binding LogOutCommand}" Margin="10,30,10,10" Height="43"/>
+        <Label Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="1" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="50,0,58,0">Roman number</Label>
+        <ScrollViewer Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="3" Margin="18,26,10,14" VerticalScrollBarVisibility="Auto">
             <TextBox Name="RomanNumber" TextWrapping="Wrap" Text="{Binding RomanNumber}" IsReadOnly="True" />
         </ScrollViewer>
-	</Grid>
+        <StackPanel Name="RequestsPanel" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" Orientation="Vertical" 
+                    Margin="0 5 0 0" Visibility="{Binding RequestsPanelVisibility}">
+            <TextBlock HorizontalAlignment="Center" Text="Previous requests" FontWeight="Bold" FontSize="16"/>
+            <StackPanel Visibility="{Binding RequestsListVisibility}" Orientation="Vertical" Height="106">
+                <ListBox ItemsSource="{Binding Path=Requests}" ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                         Margin="0,10,0,6" Height="68">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <!-- GRID NOT STRETCHING HERE -->
+                            <Grid HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
+                                    <TextBlock FontSize="14" FontWeight="Bold" xml:space="preserve">Arabic number: </TextBlock>
+                                    <TextBlock FontSize="14" Text="{Binding ArabicNumber}" TextWrapping="WrapWithOverflow" />
+                                    <TextBlock FontSize="14" xml:space="preserve">. </TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
+                                    <TextBlock FontSize="14" FontWeight="Bold" xml:space="preserve">Roman number: </TextBlock>
+                                    <TextBlock FontSize="14" Text="{Binding RomanNumber}" TextWrapping="WrapWithOverflow" />
+                                    <TextBlock FontSize="14" xml:space="preserve">. </TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2">
+                                    <TextBlock FontSize="14" FontWeight="Bold" xml:space="preserve">Date: </TextBlock>
+                                    <TextBlock FontSize="14" Text="{Binding RequestDateTime}" TextWrapping="WrapWithOverflow" />
+                                    <TextBlock FontSize="14" xml:space="preserve">. </TextBlock>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <TextBlock Text="No requests found" Visibility="{Binding RequestsEmptyMessageVisibility}" FontSize="14"
+                           HorizontalAlignment="Center" FontStyle="Italic" Margin="0 10 0 0"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
 </UserControl>

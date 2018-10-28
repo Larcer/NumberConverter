@@ -4,10 +4,10 @@ namespace Nameless.NumberConverter.Models
 {
     public class Request
     {
-        public Guid Guid;
-        public uint ArabicNumber;
-        public string RomanNumber;
-        public DateTime RequestDateTime;
+        public Guid Guid { get; }
+        public uint ArabicNumber { get; }
+        public string RomanNumber { get; }
+        public DateTime RequestDateTime { get; }
 
         public Request(uint arabicNumber, string romanNumber)
         {

@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 using Nameless.NumberConverter.Managers;
 using Nameless.NumberConverter.Models;
@@ -15,12 +17,16 @@ namespace Nameless.NumberConverter.ViewModels
 
         private string _arabicNumber;
         private string _romanNumber;
+        private ObservableCollection<Request> _requests;
+
+        private Visibility _requestsPanelVisibility = Visibility.Collapsed;
+        private Visibility _requestsListVisibility = Visibility.Collapsed;
+        private Visibility _requestsEmptyMessageVisibility = Visibility.Visible;
 
         private ICommand _logOutCommand;
         private ICommand _convertNumberCommand;
         private ICommand _showRequestsCommand;
         
-
         public string ArabicNumber
         {
             get => _arabicNumber;
@@ -41,7 +47,45 @@ namespace Nameless.NumberConverter.ViewModels
             }
         }
 
-        public bool ValidationError { get; set; }
+        public ObservableCollection<Request> Requests
+        {
+            get => _requests;
+            set
+            {
+                _requests = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Visibility RequestsPanelVisibility
+        {
+            get => _requestsPanelVisibility;
+            set
+            {
+                _requestsPanelVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Visibility RequestsListVisibility
+        {
+            get => _requestsListVisibility;
+            set
+            {
+                _requestsListVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Visibility RequestsEmptyMessageVisibility
+        {
+            get => _requestsEmptyMessageVisibility;
+            set
+            {
+                _requestsEmptyMessageVisibility = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ICommand LogOutCommand =>
             _logOutCommand ?? (_logOutCommand = new RelayCommand(LogOutExecute));
@@ -53,7 +97,6 @@ namespace Nameless.NumberConverter.ViewModels
         public ICommand ShowRequestsCommand =>
             _showRequestsCommand ?? (_showRequestsCommand = new RelayCommand(ShowRequestsExecute));
 
-
         public void LogOutExecute(object o)
         {
             SessionManager.Instance.EndSession();
@@ -64,7 +107,23 @@ namespace Nameless.NumberConverter.ViewModels
         {
             RomanNumber = string.Empty;
             if (service.TryConvertToUintNumber(_arabicNumber, out uint arabicNumber))
-                RomanNumber = service.ExecuteConvertion(arabicNumber);
+            {
+                RomanNumber = service.ExecuteConvertion(arabicNumber, out Request request);
+                AddRequest(request);
+            }
+        }
+
+        private void AddRequest(Request request)
+        {
+            if (RequestsPanelVisibility == Visibility.Visible)
+            {
+                Requests.Add(request);
+                if (RequestsEmptyMessageVisibility == Visibility.Visible)
+                {
+                    RequestsEmptyMessageVisibility = Visibility.Collapsed;
+                    RequestsListVisibility = Visibility.Visible;
+                }
+            }
         }
 
         public bool ConvertNumberCanExecute(object o)
@@ -75,8 +134,13 @@ namespace Nameless.NumberConverter.ViewModels
         public void ShowRequestsExecute(object o)
         {
             IList<Request> userRequests = service.GetCurrentUserRequests();
-
-            // TODO. Show the list of user requests
+            Requests = new ObservableCollection<Request>(userRequests);
+            if (Requests.Count > 0)
+            {
+                RequestsEmptyMessageVisibility = Visibility.Collapsed;
+                RequestsListVisibility = Visibility.Visible;
+            }
+            RequestsPanelVisibility = Visibility.Visible;
         }
     }
 }

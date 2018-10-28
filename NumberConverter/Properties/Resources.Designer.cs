@@ -61,6 +61,24 @@ namespace NumberConverter.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The number should be between {0} and {1}!.
+        /// </summary>
+        internal static string NumberConverter_NumberOutOfRange {
+            get {
+                return ResourceManager.GetString("NumberConverter_NumberOutOfRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type in the positive integer number!.
+        /// </summary>
+        internal static string NumberConverter_PositiveIntegerNumber {
+            get {
+                return ResourceManager.GetString("NumberConverter_PositiveIntegerNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to decrypt password.{0}Detailed information: {1}.
         /// </summary>
         internal static string SignIn_FailedToDecryptPassword {
