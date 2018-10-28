@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
@@ -21,7 +22,6 @@ namespace Nameless.NumberConverter.ViewModels
 
         private Visibility _requestsPanelVisibility = Visibility.Collapsed;
         private Visibility _requestsListVisibility = Visibility.Collapsed;
-        private Visibility _requestsEmptyMessageVisibility = Visibility.Visible;
 
         private ICommand _logOutCommand;
         private ICommand _convertNumberCommand;
@@ -77,16 +77,6 @@ namespace Nameless.NumberConverter.ViewModels
             }
         }
 
-        public Visibility RequestsEmptyMessageVisibility
-        {
-            get => _requestsEmptyMessageVisibility;
-            set
-            {
-                _requestsEmptyMessageVisibility = value;
-                OnPropertyChanged();
-            }
-        }
-
         public ICommand LogOutCommand =>
             _logOutCommand ?? (_logOutCommand = new RelayCommand(LogOutExecute));
 
@@ -101,6 +91,10 @@ namespace Nameless.NumberConverter.ViewModels
         {
             SessionManager.Instance.EndSession();
             NavigationManager.Instance.Navigate(WindowMode.SignIn);
+            ArabicNumber = string.Empty;
+            RomanNumber = String.Empty;
+            RequestsPanelVisibility = Visibility.Collapsed;
+            RequestsListVisibility = Visibility.Collapsed;
         }
 
         public void ConvertNumberExecute(object o)
@@ -118,11 +112,6 @@ namespace Nameless.NumberConverter.ViewModels
             if (RequestsPanelVisibility == Visibility.Visible)
             {
                 Requests.Add(request);
-                if (RequestsEmptyMessageVisibility == Visibility.Visible)
-                {
-                    RequestsEmptyMessageVisibility = Visibility.Collapsed;
-                    RequestsListVisibility = Visibility.Visible;
-                }
             }
         }
 
@@ -137,7 +126,6 @@ namespace Nameless.NumberConverter.ViewModels
             Requests = new ObservableCollection<Request>(userRequests);
             if (Requests.Count > 0)
             {
-                RequestsEmptyMessageVisibility = Visibility.Collapsed;
                 RequestsListVisibility = Visibility.Visible;
             }
             RequestsPanelVisibility = Visibility.Visible;
