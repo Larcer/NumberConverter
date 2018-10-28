@@ -6,7 +6,7 @@
              xmlns:t="clr-namespace:Nameless.NumberConverter.Tools"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid Name="MainGrid">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>

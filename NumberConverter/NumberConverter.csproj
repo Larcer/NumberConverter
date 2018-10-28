@@ -66,6 +66,7 @@
     <Compile Include="Managers\SessionManager.cs" />
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Services\NumberConverterService.cs" />
     <Compile Include="Services\SignInService.cs" />
     <Compile Include="Services\SignUpService.cs" />
     <Compile Include="Tools\PasswordBoxAssistant.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="ViewModels\Authentication\SignInViewModel.cs" />
     <Compile Include="ViewModels\Authentication\SignUpViewModel.cs" />
     <Compile Include="ViewModels\Core\NotifiableViewModel.cs" />
+    <Compile Include="ViewModels\NumberConverterViewModel.cs" />
     <Compile Include="Views\NumberConverterView.xaml.cs">
       <DependentUpon>NumberConverterView.xaml</DependentUpon>
     </Compile>

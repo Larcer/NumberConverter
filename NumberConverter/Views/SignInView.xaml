@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Height="200" MinHeight="182" MaxHeight="220" MinWidth="200" Width="300" MaxWidth="520"
         >
-    <Grid Name="MainGrid">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
