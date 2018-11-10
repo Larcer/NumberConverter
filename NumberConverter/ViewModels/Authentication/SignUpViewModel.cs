@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Windows.Input;
+
 using Nameless.NumberConverter.Managers;
 using Nameless.NumberConverter.Models;
 using Nameless.NumberConverter.Tools;
 using Nameless.NumberConverter.ViewModels.Core;
-using NumberConverter.Managers;
-using NumberConverter.Properties;
-using NumberConverter.Services;
+using Nameless.NumberConverter.Properties;
+using Nameless.NumberConverter.Services;
 
 namespace Nameless.NumberConverter.ViewModels.Authentication
 {

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NumberConverter.Properties
+namespace Nameless.NumberConverter.Properties
 {
 
 

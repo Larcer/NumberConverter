@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Reflection;
 
 namespace Nameless.NumberConverter.Tools
@@ -18,9 +17,7 @@ namespace Nameless.NumberConverter.Tools
             Type type = typeof(T);
             ConstructorInfo ci = type.GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic,
                 null, Type.EmptyTypes, null);
-
-            Debug.Assert(ci != null);
-
+            
             return ci.Invoke(null) as T;
         }
     }

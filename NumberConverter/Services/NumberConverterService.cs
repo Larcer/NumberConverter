@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Nameless.NumberConverter.Models;
-using NumberConverter.Managers;
-using NumberConverter.Properties;
 
-namespace NumberConverter.Services
+using Nameless.NumberConverter.Data;
+using Nameless.NumberConverter.Models;
+using Nameless.NumberConverter.Managers;
+using Nameless.NumberConverter.Properties;
+
+namespace Nameless.NumberConverter.Services
 {
     public class NumberConverterService
     {
-        private IList<(string, uint)> _romanNumbers;
+        private readonly IList<(string, uint)> _romanNumbers;
 
         public NumberConverterService()
         {
@@ -34,27 +36,32 @@ namespace NumberConverter.Services
             catch (OverflowException)
             {
                 MessageManager.UserMessage(string.Format(Resources.NumberConverter_NumberOutOfRange, uint.MinValue, uint.MaxValue));
+                MessageManager.Log($"The user \"{SessionManager.Instance.CurrentUser.Login}\" has typed a number that is out of range: {number}");
             }
             catch (FormatException)
             {
                 MessageManager.UserMessage(Resources.NumberConverter_PositiveIntegerNumber);
+                MessageManager.Log($"The user \"{SessionManager.Instance.CurrentUser.Login}\" has typed not a number: {number}");
             }
 
             return false;
         }
 
-        public string ExecuteConvertion(uint number, out Request request)
+        public string ExecuteConversion(uint number, out Request request)
         {
             string romanRepresentation = ToRoman(number);
             request = new Request(number, romanRepresentation);
+
             SessionManager.Instance.CurrentUser.Requests.Add(request);
+            DBManager.Instance.UpdateUser(SessionManager.Instance.CurrentUser);
+            MessageManager.Log($"The user \"{SessionManager.Instance.CurrentUser.Login}\" has executed number conversion: {request}");
+
             return romanRepresentation;
         }
 
         private string ToRoman(uint arabicNumber)
         {
             StringBuilder romanNumber = new StringBuilder();
-
             while (arabicNumber != 0)
             {
                 foreach (var (representation, number) in _romanNumbers)
@@ -74,7 +81,15 @@ namespace NumberConverter.Services
         public IList<Request> GetCurrentUserRequests()
         {
             User user = SessionManager.Instance.CurrentUser;
+            MessageManager.Log($"The user \"{user.Login}\" has opened previous requests");
+
             return user.Requests;
+        }
+
+        public void LogOut()
+        {
+            MessageManager.Log($"The user \"{SessionManager.Instance.CurrentUser.Login}\" has logged out");
+            SessionManager.Instance.EndSession();
         }
     }
 }

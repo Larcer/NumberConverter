@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using NumberConverter.Tools;
+
+using Nameless.NumberConverter.Tools;
 
 namespace Nameless.NumberConverter.Models
 {
-
+    [Serializable]
     public class User
     {
         public Guid Guid { get; }

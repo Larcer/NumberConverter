@@ -2,6 +2,7 @@
 
 namespace Nameless.NumberConverter.Models
 {
+    [Serializable]
     public class Request
     {
         public Guid Guid { get; }

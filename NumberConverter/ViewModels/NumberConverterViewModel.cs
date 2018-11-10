@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
+
 using Nameless.NumberConverter.Managers;
 using Nameless.NumberConverter.Models;
 using Nameless.NumberConverter.Tools;
 using Nameless.NumberConverter.ViewModels.Core;
-using NumberConverter.Managers;
-using NumberConverter.Services;
+using Nameless.NumberConverter.Services;
 
 namespace Nameless.NumberConverter.ViewModels
 {
@@ -89,10 +89,10 @@ namespace Nameless.NumberConverter.ViewModels
 
         public void LogOutExecute(object o)
         {
-            SessionManager.Instance.EndSession();
+            service.LogOut();
             NavigationManager.Instance.Navigate(WindowMode.SignIn);
             ArabicNumber = string.Empty;
-            RomanNumber = String.Empty;
+            RomanNumber = string.Empty;
             RequestsPanelVisibility = Visibility.Collapsed;
             RequestsListVisibility = Visibility.Collapsed;
         }
@@ -102,7 +102,7 @@ namespace Nameless.NumberConverter.ViewModels
             RomanNumber = string.Empty;
             if (service.TryConvertToUintNumber(_arabicNumber, out uint arabicNumber))
             {
-                RomanNumber = service.ExecuteConvertion(arabicNumber, out Request request);
+                RomanNumber = service.ExecuteConversion(arabicNumber, out Request request);
                 AddRequest(request);
             }
         }

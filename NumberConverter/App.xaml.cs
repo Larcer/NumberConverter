@@ -11,7 +11,11 @@ namespace Nameless.NumberConverter
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            NavigationManager.Instance.Navigate(WindowMode.SignIn);
+
+            if (SessionManager.Instance.CurrentUser == null)
+                NavigationManager.Instance.Navigate(WindowMode.SignIn);
+            else
+                NavigationManager.Instance.Navigate(WindowMode.NumberConverter);
         }
     }
 }

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NumberConverter.Properties {
+namespace Nameless.NumberConverter.Properties {
     using System;
     
     
@@ -111,6 +111,15 @@ namespace NumberConverter.Properties {
         internal static string SignIn_UserDoesNotExist {
             get {
                 return ResourceManager.GetString("SignIn_UserDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The user with email &quot;{0}&quot; already exists!.
+        /// </summary>
+        internal static string SignUp_EmailAlreadyExists {
+            get {
+                return ResourceManager.GetString("SignUp_EmailAlreadyExists", resourceCulture);
             }
         }
         

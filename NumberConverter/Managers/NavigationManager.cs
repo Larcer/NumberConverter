@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows.Controls;
+
 using Nameless.NumberConverter.Tools;
 using Nameless.NumberConverter.Windows;
 
@@ -27,15 +27,13 @@ namespace Nameless.NumberConverter.Managers
         {
             _contentWindow = new ContentWindow();
             _contentWindow.Show();
+
             _views = InitializeDictionary();
         }
 
         // Navigates to the specified view
         public void Navigate(WindowMode mode)
         {
-            // The window with given name should exist in the dictionary
-            Debug.Assert(_views.ContainsKey(mode), "The window with mode " + mode + " does not exist");
-
             ContentControl view = _views[mode];
             if (view == null)
                 _views[mode] = (view = CreateWindowMode(mode));
@@ -47,7 +45,6 @@ namespace Nameless.NumberConverter.Managers
         private IDictionary<WindowMode, ContentControl> InitializeDictionary()
         {
             IDictionary<WindowMode, ContentControl> views = new Dictionary<WindowMode, ContentControl>();
-
             foreach (WindowMode windowMode in Enum.GetValues(typeof(WindowMode)))
                 views.Add(windowMode, null);
 
@@ -60,8 +57,6 @@ namespace Nameless.NumberConverter.Managers
         {
             string fullName = GetFullViewName(mode);
             Type viewType = Type.GetType(fullName);
-            // The type should exist
-            Debug.Assert(viewType != null);
             object viewObject = Activator.CreateInstance(viewType);
 
             return (ContentControl)viewObject;

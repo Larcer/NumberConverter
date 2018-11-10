@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Security.Cryptography;
+
 using Nameless.NumberConverter.Data;
 using Nameless.NumberConverter.Models;
-using NumberConverter.Managers;
-using NumberConverter.Properties;
+using Nameless.NumberConverter.Managers;
+using Nameless.NumberConverter.Properties;
 
 namespace Nameless.NumberConverter.Services
 {
@@ -14,23 +14,23 @@ namespace Nameless.NumberConverter.Services
         // Authenticates user in the application
         public bool LoginUser(string login, string password)
         {
-            /* Check user existence first */
-            Debug.Assert(login != null);
             User currentUser = DBManager.Instance.GetUserByLogin(login); // Throws an exception only when login == null
             if (currentUser == null)
             {
                 MessageManager.UserMessage(string.Format(
                     Resources.SignIn_UserDoesNotExist, login));
+                MessageManager.Log($"The user has tried to sign in with non existing login: {login}");
+
                 return false;
             }
 
-            /* Then check password */
-            Debug.Assert(password != null);
             try
             {
                 if (!currentUser.PasswordMatches(password))
                 {
                     MessageManager.UserMessage(Resources.SignIn_PasswordIsWrong);
+                    MessageManager.Log($"The user \"{currentUser.Login}\" tried to sign in with not matching password");
+
                     return false;
                 }
 
@@ -38,15 +38,14 @@ namespace Nameless.NumberConverter.Services
                 SessionManager.Instance.StartSession(currentUser);
                 SaveLastLoginDate(currentUser);
                 MessageManager.UserMessage(Resources.SignIn_LoginSuccess);
+                MessageManager.Log($"The user \"{currentUser.Login}\" has successfully logged in");
             }
             catch (CryptographicException ce)
             {
                 MessageManager.UserMessage(string.Format(Resources.SignIn_FailedToDecryptPassword,
                     Environment.NewLine, ce.Message));
-                MessageManager.UserMessage(ce.StackTrace);
-
-                // Log the message into some error.log file
-
+                MessageManager.Log($"Failed to decrypt password while checking matching password. User login: {currentUser.Login}", ce);
+                
                 return false;
             }
 
@@ -56,6 +55,7 @@ namespace Nameless.NumberConverter.Services
         private void SaveLastLoginDate(User user)
         {
             user.LastLoginDateTime = DateTime.Now;
+            DBManager.Instance.UpdateUser(user);
         }
     }
 }

@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace NumberConverter.Tools
+namespace Nameless.NumberConverter.Tools
 {
     // Represents a simple md5 encryptor
     public static class SimpleEncryptor

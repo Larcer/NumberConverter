@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
+
 using Nameless.NumberConverter.Managers;
 using Nameless.NumberConverter.Services;
 using Nameless.NumberConverter.Tools;
