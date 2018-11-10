@@ -1,5 +1,7 @@
 ﻿using System.Windows;
+
 using Nameless.NumberConverter.Managers;
+using Nameless.NumberConverter.ViewModels;
 
 namespace Nameless.NumberConverter
 {
@@ -12,10 +14,10 @@ namespace Nameless.NumberConverter
         {
             base.OnStartup(e);
 
-            if (SessionManager.Instance.CurrentUser == null)
-                NavigationManager.Instance.Navigate(WindowMode.SignIn);
-            else
-                NavigationManager.Instance.Navigate(WindowMode.NumberConverter);
+            ContentWindowViewModel.Instance.Show();
+            NavigationManager.Instance.Navigate(SessionManager.Instance.CurrentUser == null
+                ? WindowMode.SignIn
+                : WindowMode.NumberConverter);
         }
     }
 }

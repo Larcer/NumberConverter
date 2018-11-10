@@ -81,6 +81,7 @@
     <Compile Include="Tools\SingletonBase.cs" />
     <Compile Include="ViewModels\Authentication\SignInViewModel.cs" />
     <Compile Include="ViewModels\Authentication\SignUpViewModel.cs" />
+    <Compile Include="ViewModels\ContentWindowViewModel.cs" />
     <Compile Include="ViewModels\Core\NotifiableViewModel.cs" />
     <Compile Include="ViewModels\NumberConverterViewModel.cs" />
     <Compile Include="Views\NumberConverterView.xaml.cs">

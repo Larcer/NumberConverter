@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 using Nameless.NumberConverter.Managers;
@@ -58,9 +59,12 @@ namespace Nameless.NumberConverter.ViewModels.Authentication
             Environment.Exit(1);
         }
 
-        private void SignInExecute(object o)
+        private async void SignInExecute(object o)
         {
-            bool success = _service.LoginUser(_login, _password);
+            ContentWindowViewModel.Instance.ShowLoader();
+            bool success = await Task.Run(() => _service.LoginUser(_login, _password));
+            ContentWindowViewModel.Instance.HideLoader();
+
             if (success)
             {
                 NavigationManager.Instance.Navigate(WindowMode.NumberConverter);

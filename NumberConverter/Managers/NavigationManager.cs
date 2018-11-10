@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Controls;
 
 using Nameless.NumberConverter.Tools;
-using Nameless.NumberConverter.Windows;
+using Nameless.NumberConverter.ViewModels;
 
 namespace Nameless.NumberConverter.Managers
 {
@@ -18,16 +18,11 @@ namespace Nameless.NumberConverter.Managers
     // Handles navigation between windows
     public class NavigationManager : SingletonBase<NavigationManager>
     {
-        // The content window to place windows in
-        private readonly ContentWindow _contentWindow;
         // The list of application views
         private readonly IDictionary<WindowMode, ContentControl> _views;
 
         private NavigationManager()
         {
-            _contentWindow = new ContentWindow();
-            _contentWindow.Show();
-
             _views = InitializeDictionary();
         }
 
@@ -38,7 +33,8 @@ namespace Nameless.NumberConverter.Managers
             if (view == null)
                 _views[mode] = (view = CreateWindowMode(mode));
 
-            _contentWindow.ContentControl.Content = view;
+
+            ContentWindowViewModel.Instance.ReplaceContent(view);
         }
 
         // Returns dictionary with enum items as keys and nulls as values

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -97,14 +99,28 @@ namespace Nameless.NumberConverter.ViewModels
             RequestsListVisibility = Visibility.Collapsed;
         }
 
-        public void ConvertNumberExecute(object o)
+        public async void ConvertNumberExecute(object o)
         {
-            RomanNumber = string.Empty;
-            if (service.TryConvertToUintNumber(_arabicNumber, out uint arabicNumber))
+            ContentWindowViewModel.Instance.ShowLoader();
+
+            Request request = null;
+
+            bool success = await Task.Run(() =>
             {
-                RomanNumber = service.ExecuteConversion(arabicNumber, out Request request);
+                RomanNumber = string.Empty;
+                if (service.TryConvertToUintNumber(_arabicNumber, out uint arabicNumber))
+                {
+                    RomanNumber = service.ExecuteConversion(arabicNumber, out request);
+                    return true;
+                }
+
+                return false;
+            });
+
+            if (success)
                 AddRequest(request);
-            }
+
+            ContentWindowViewModel.Instance.HideLoader();
         }
 
         private void AddRequest(Request request)
@@ -120,15 +136,22 @@ namespace Nameless.NumberConverter.ViewModels
             return true;
         }
 
-        public void ShowRequestsExecute(object o)
+        public async void ShowRequestsExecute(object o)
         {
-            IList<Request> userRequests = service.GetCurrentUserRequests();
-            Requests = new ObservableCollection<Request>(userRequests);
-            if (Requests.Count > 0)
+            ContentWindowViewModel.Instance.ShowLoader();
+
+            await Task.Run(() =>
             {
-                RequestsListVisibility = Visibility.Visible;
-            }
-            RequestsPanelVisibility = Visibility.Visible;
+                IList<Request> userRequests = service.GetCurrentUserRequests();
+                Requests = new ObservableCollection<Request>(userRequests);
+                if (Requests.Count > 0)
+                {
+                    RequestsListVisibility = Visibility.Visible;
+                }
+                RequestsPanelVisibility = Visibility.Visible;
+            });
+            
+            ContentWindowViewModel.Instance.HideLoader();
         }
     }
 }

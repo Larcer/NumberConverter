@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 using Nameless.NumberConverter.Managers;
@@ -12,7 +13,7 @@ namespace Nameless.NumberConverter.ViewModels.Authentication
 {
     public class SignUpViewModel : NotifiableViewModel
     {
-        private readonly SignUpService service = new SignUpService();
+        private readonly SignUpService _service = new SignUpService();
 
         private string _firstName;
         private string _lastName;
@@ -93,12 +94,15 @@ namespace Nameless.NumberConverter.ViewModels.Authentication
             NavigationManager.Instance.Navigate(WindowMode.SignIn);
         }
 
-        private void SignUpExecute(object o)
+        private async void SignUpExecute(object o)
         {
             User user = new User(_firstName, _lastName,
                 _login, _email, _password);
 
-            bool success = service.SignUp(user);
+            ContentWindowViewModel.Instance.ShowLoader();
+            bool success = await Task.Run(() => _service.SignUp(user));
+            ContentWindowViewModel.Instance.HideLoader();
+            
             if (success)
             {
                 MessageManager.UserMessage(string.Format(
