@@ -11,7 +11,7 @@ namespace Nameless.NumberConverter.Data
 
         private DBManager()
         {
-
+            
         }
 
         // Checks if user with the specified login exists

@@ -69,6 +69,11 @@
     <Compile Include="Services\NumberConverterService.cs" />
     <Compile Include="Services\SignInService.cs" />
     <Compile Include="Services\SignUpService.cs" />
+    <Compile Include="Tools\ListViewLayoutManager\FixedColumn.cs" />
+    <Compile Include="Tools\ListViewLayoutManager\LayoutColumn.cs" />
+    <Compile Include="Tools\ListViewLayoutManager\ListViewLayoutManager.cs" />
+    <Compile Include="Tools\ListViewLayoutManager\ProportionalColumn.cs" />
+    <Compile Include="Tools\ListViewLayoutManager\RangeColumn.cs" />
     <Compile Include="Tools\PasswordBoxAssistant.cs" />
     <Compile Include="Tools\RelayCommand.cs" />
     <Compile Include="Tools\SimpleEncryptor.cs" />

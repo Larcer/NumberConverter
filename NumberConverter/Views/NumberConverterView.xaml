@@ -35,36 +35,37 @@
                     Margin="0 5 0 0" Visibility="{Binding RequestsPanelVisibility}">
             <TextBlock HorizontalAlignment="Center" Text="Previous requests" FontWeight="Bold" FontSize="16"/>
             <StackPanel Visibility="{Binding RequestsListVisibility}" Orientation="Vertical" Height="106">
-                <ListBox ItemsSource="{Binding Path=Requests}" ScrollViewer.VerticalScrollBarVisibility="Auto" 
-                         Margin="0,10,0,6" Height="68">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <!-- GRID NOT STRETCHING HERE -->
-                            <Grid HorizontalAlignment="Stretch">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
-                                    <TextBlock FontSize="14" FontWeight="Bold" xml:space="preserve">Arabic number:</TextBlock>
-                                    <TextBlock FontSize="14" Text="{Binding ArabicNumber}" TextWrapping="WrapWithOverflow" />
-                                    <TextBlock FontSize="14" xml:space="preserve">.</TextBlock>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
-                                    <TextBlock FontSize="14" FontWeight="Bold" xml:space="preserve">Roman number:</TextBlock>
-                                    <TextBlock FontSize="14" Text="{Binding RomanNumber}" TextWrapping="WrapWithOverflow" />
-                                    <TextBlock FontSize="14" xml:space="preserve">.</TextBlock>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2">
-                                    <TextBlock FontSize="14" FontWeight="Bold" xml:space="preserve">Date:</TextBlock>
-                                    <TextBlock FontSize="14" Text="{Binding RequestDateTime}" TextWrapping="WrapWithOverflow" />
-                                    <TextBlock FontSize="14" xml:space="preserve">.</TextBlock>
-                                </StackPanel>
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                <ListView ItemsSource="{Binding Path=Requests}" ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                         Margin="0,10,0,6" Height="70">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn>
+                                <TextBlock Padding="5" FontWeight="Bold" TextWrapping="Wrap">Arabic Number</TextBlock>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding ArabicNumber}" TextWrapping="Wrap"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn>
+                                <TextBlock Padding="5" FontWeight="Bold" TextWrapping="Wrap">Roman number</TextBlock>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding RomanNumber}" TextWrapping="Wrap"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn>
+                                <TextBlock Padding="5" FontWeight="Bold" TextWrapping="Wrap">Date</TextBlock>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding RequestDateTime}" TextWrapping="Wrap"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
             </StackPanel>
         </StackPanel>
     </Grid>
