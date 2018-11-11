@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Nameless.NumberConverter.Managers;
 using Nameless.NumberConverter.Models;
 using Nameless.NumberConverter.Tools;
@@ -10,7 +11,7 @@ namespace Nameless.NumberConverter.Data
     // Represents in memory database
     public class DBManager : SingletonBase<DBManager>
     {
-        private readonly IDictionary<string, User> _users = new Dictionary<string, User>();
+        private readonly IDictionary<string, User> _users;
 
         private DBManager()
         {
@@ -61,11 +62,13 @@ namespace Nameless.NumberConverter.Data
             return null;
         }
 
+        // Serializes database to a file
         private void SaveChanges()
         {
             SerializationManager.Serialize(_users, FileFolderHelper.StorageFilePath);
         }
 
+        // Deserializes database from a file
         private IDictionary<string, User> DeserializeDB()
         {
             try

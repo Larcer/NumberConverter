@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using Nameless.NumberConverter.Managers;
 
 namespace Nameless.NumberConverter.Tools
 {

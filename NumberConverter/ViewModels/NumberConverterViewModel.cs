@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -16,7 +14,7 @@ namespace Nameless.NumberConverter.ViewModels
 {
     public class NumberConverterViewModel : NotifiableViewModel
     {
-        private readonly NumberConverterService service = new NumberConverterService();
+        private readonly NumberConverterService _service = new NumberConverterService();
 
         private string _arabicNumber;
         private string _romanNumber;
@@ -91,7 +89,7 @@ namespace Nameless.NumberConverter.ViewModels
 
         public void LogOutExecute(object o)
         {
-            service.LogOut();
+            _service.LogOut();
             NavigationManager.Instance.Navigate(WindowMode.SignIn);
             ArabicNumber = string.Empty;
             RomanNumber = string.Empty;
@@ -108,9 +106,9 @@ namespace Nameless.NumberConverter.ViewModels
             bool success = await Task.Run(() =>
             {
                 RomanNumber = string.Empty;
-                if (service.TryConvertToUintNumber(_arabicNumber, out uint arabicNumber))
+                if (_service.TryConvertToUintNumber(_arabicNumber, out uint arabicNumber))
                 {
-                    RomanNumber = service.ExecuteConversion(arabicNumber, out request);
+                    RomanNumber = _service.ExecuteConversion(arabicNumber, out request);
                     return true;
                 }
 
@@ -142,7 +140,7 @@ namespace Nameless.NumberConverter.ViewModels
 
             await Task.Run(() =>
             {
-                IList<Request> userRequests = service.GetCurrentUserRequests();
+                IList<Request> userRequests = _service.GetCurrentUserRequests();
                 Requests = new ObservableCollection<Request>(userRequests);
                 if (Requests.Count > 0)
                 {
