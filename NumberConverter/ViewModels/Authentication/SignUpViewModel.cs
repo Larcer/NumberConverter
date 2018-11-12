@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
-
 using Nameless.NumberConverter.Managers;
 using Nameless.NumberConverter.Models;
 using Nameless.NumberConverter.Tools;
@@ -27,8 +26,7 @@ namespace Nameless.NumberConverter.ViewModels.Authentication
         private ICommand _signUpCommand;
         // Stops the application
         private ICommand _closeCommand;
-
-
+        
         public string FirstName
         {
             get => _firstName;
@@ -78,8 +76,7 @@ namespace Nameless.NumberConverter.ViewModels.Authentication
                 OnPropertyChanged();
             }
         }
-
-
+        
         public ICommand BackCommand =>
             _backCommand ?? (_backCommand = new RelayCommand(CancelExecute));
 
@@ -88,7 +85,7 @@ namespace Nameless.NumberConverter.ViewModels.Authentication
 
         public ICommand CloseCommand =>
             _closeCommand ?? (_closeCommand = new RelayCommand(CloseExecute));
-
+        
         private void CancelExecute(object o)
         {
             NavigationManager.Instance.Navigate(WindowMode.SignIn);
@@ -96,11 +93,11 @@ namespace Nameless.NumberConverter.ViewModels.Authentication
 
         private async void SignUpExecute(object o)
         {
-            User user = new User(_firstName, _lastName,
+            var user = new User(_firstName, _lastName,
                 _login, _email, _password);
 
             ContentWindowViewModel.Instance.ShowLoader();
-            bool success = await Task.Run(() => _service.SignUp(user));
+            var success = await Task.Run(() => _service.SignUp(user));
             ContentWindowViewModel.Instance.HideLoader();
             
             if (success)

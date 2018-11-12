@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
 using Nameless.NumberConverter.Data;
 using Nameless.NumberConverter.Models;
 using Nameless.NumberConverter.Managers;
@@ -30,8 +29,7 @@ namespace Nameless.NumberConverter.Services
 
                 return false;
             }
-
-
+            
             /* Check login existence */
             if (DBManager.Instance.UserExists(user.Login))
             {
@@ -48,7 +46,7 @@ namespace Nameless.NumberConverter.Services
             return true;
         }
 
-        // Returns true if the specified string is a valid email
+        // Returns true if specified string is a valid email
         private bool EmailIsValid(string email)
         {
             return new EmailAddressAttribute().IsValid(email);

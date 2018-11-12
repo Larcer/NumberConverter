@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using Nameless.NumberConverter.Managers;
 using Nameless.NumberConverter.Models;
 using Nameless.NumberConverter.Tools;
@@ -9,8 +8,9 @@ using Nameless.NumberConverter.Tools;
 namespace Nameless.NumberConverter.Data
 {
     // Represents in memory database
-    public class DBManager : SingletonBase<DBManager>
+    internal class DBManager : SingletonBase<DBManager>
     {
+        // Map of users' logins and users
         private readonly IDictionary<string, User> _users;
 
         private DBManager()
@@ -18,33 +18,33 @@ namespace Nameless.NumberConverter.Data
             _users = DeserializeDB();
         }
 
-        // Checks if user with the specified login exists
-        public bool UserExists(string login)
+        // Returns a user with specified login or null if one does not exist
+        internal User GetUserByLogin(string login)
+        {
+            return UserExists(login) ? _users[login] : null;
+        }
+
+        // Checks if a user with specified login exists
+        internal bool UserExists(string login)
         {
             return _users.ContainsKey(login);
         }
 
-        // Checks if the specified email exists
-        public bool EmailExists(string email)
+        // Checks if specified email exists
+        internal bool EmailExists(string email)
         {
-            return _users.FirstOrDefault(lu => lu.Value.Email.Equals(email)).Key != null;
-        }
-
-        // Returns user with the specified login or null if one does not exist
-        public User GetUserByLogin(string login)
-        {
-            return _users.ContainsKey(login) ? _users[login] : null;
+            return _users.FirstOrDefault(userEntry => userEntry.Value.Email == email).Key != null;
         }
 
         // Adds new user into the database
-        public void AddUser(User user)
+        internal void AddUser(User user)
         {
             _users.Add(user.Login, user);
             SaveChanges();
         }
 
-        // Updates user in the database
-        public void UpdateUser(User user)
+        // Updates specified user in the database
+        internal void UpdateUser(User user)
         {
             SaveChanges();
         }
@@ -52,23 +52,23 @@ namespace Nameless.NumberConverter.Data
         // Checks if deserialized user exists in the database
         internal User CheckCachedUser(User user)
         {
-            if (user == null || user.Login == null || !_users.ContainsKey(user.Login))
+            if (user?.Login == null || !_users.ContainsKey(user.Login))
                 return null;
 
-            User userInStorage = _users[user.Login];
-            if (userInStorage != null && userInStorage.Password != null && userInStorage.Password.Equals(user.Password))
+            var userInStorage = _users[user.Login];
+            if (userInStorage?.Password != null && userInStorage.Password == user.Password)
                 return userInStorage;
 
             return null;
         }
 
-        // Serializes database to a file
+        // Serializes the database to a file
         private void SaveChanges()
         {
             SerializationManager.Serialize(_users, FileFolderHelper.StorageFilePath);
         }
 
-        // Deserializes database from a file
+        // Deserializes the database from a file
         private IDictionary<string, User> DeserializeDB()
         {
             try

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Security.Cryptography;
-
 using Nameless.NumberConverter.Data;
 using Nameless.NumberConverter.Models;
 using Nameless.NumberConverter.Managers;
@@ -14,7 +13,7 @@ namespace Nameless.NumberConverter.Services
         // Authenticates user in the application
         public bool LoginUser(string login, string password)
         {
-            User currentUser = DBManager.Instance.GetUserByLogin(login); // Throws an exception only when login == null
+            var currentUser = DBManager.Instance.GetUserByLogin(login);
             if (currentUser == null)
             {
                 MessageManager.UserMessage(string.Format(
@@ -37,6 +36,7 @@ namespace Nameless.NumberConverter.Services
                 /* Everything is ok, login user */
                 SessionManager.Instance.StartSession(currentUser);
                 SaveLastLoginDate(currentUser);
+
                 MessageManager.UserMessage(Resources.SignIn_LoginSuccess);
                 MessageManager.Log($"The user \"{currentUser.Login}\" has successfully logged in");
             }
@@ -52,6 +52,7 @@ namespace Nameless.NumberConverter.Services
             return true;
         }
 
+        // Updates last login user date
         private void SaveLastLoginDate(User user)
         {
             user.LastLoginDateTime = DateTime.Now;

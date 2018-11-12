@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-
 using Nameless.NumberConverter.Managers;
 using Nameless.NumberConverter.Models;
 using Nameless.NumberConverter.Tools;
@@ -12,6 +10,7 @@ using Nameless.NumberConverter.Services;
 
 namespace Nameless.NumberConverter.ViewModels
 {
+    
     public class NumberConverterViewModel : NotifiableViewModel
     {
         private readonly NumberConverterService _service = new NumberConverterService();
@@ -23,8 +22,11 @@ namespace Nameless.NumberConverter.ViewModels
         private Visibility _requestsPanelVisibility = Visibility.Collapsed;
         private Visibility _requestsListVisibility = Visibility.Collapsed;
 
+        // Gets user to log out
         private ICommand _logOutCommand;
+        // Converts arabic number to the roman number
         private ICommand _convertNumberCommand;
+        // Shows user requests
         private ICommand _showRequestsCommand;
         
         public string ArabicNumber
@@ -86,13 +88,13 @@ namespace Nameless.NumberConverter.ViewModels
 
         public ICommand ShowRequestsCommand =>
             _showRequestsCommand ?? (_showRequestsCommand = new RelayCommand(ShowRequestsExecute));
-
+        
         public void LogOutExecute(object o)
         {
             _service.LogOut();
             NavigationManager.Instance.Navigate(WindowMode.SignIn);
-            ArabicNumber = string.Empty;
-            RomanNumber = string.Empty;
+
+            ArabicNumber = RomanNumber = string.Empty;
             RequestsPanelVisibility = Visibility.Collapsed;
             RequestsListVisibility = Visibility.Collapsed;
         }
@@ -102,8 +104,7 @@ namespace Nameless.NumberConverter.ViewModels
             ContentWindowViewModel.Instance.ShowLoader();
 
             Request request = null;
-
-            bool success = await Task.Run(() =>
+            var success = await Task.Run(() =>
             {
                 RomanNumber = string.Empty;
                 if (_service.TryConvertToUintNumber(_arabicNumber, out uint arabicNumber))
@@ -140,12 +141,11 @@ namespace Nameless.NumberConverter.ViewModels
 
             await Task.Run(() =>
             {
-                IList<Request> userRequests = _service.GetCurrentUserRequests();
+                var userRequests = _service.GetCurrentUserRequests();
                 Requests = new ObservableCollection<Request>(userRequests);
                 if (Requests.Count > 0)
-                {
                     RequestsListVisibility = Visibility.Visible;
-                }
+
                 RequestsPanelVisibility = Visibility.Visible;
             });
             

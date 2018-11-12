@@ -7,10 +7,10 @@
         mc:Ignorable="d"
         Title="NumberConverter" Height="450" Width="800">
 	<Grid>
-		<ContentControl Name="ContentControl" IsEnabled="{Binding Path=IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+		<ContentControl Name="ContentControl" IsEnabled="{Binding Path=IsEnabled, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
 		<fa:ImageAwesome Name="ImageAwesome" Icon="Spinner" Width="50" Height="50" 
                          HorizontalAlignment="Center" VerticalAlignment="Center"
                          Spin="True"
-                         Visibility="{Binding Path=LoaderVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                         Visibility="{Binding Path=LoaderVisibility, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
 	</Grid>
 </Window>

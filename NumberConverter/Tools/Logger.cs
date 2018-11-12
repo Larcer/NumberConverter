@@ -4,15 +4,16 @@ using System.Text;
 
 namespace Nameless.NumberConverter.Tools
 {
+    // Handles log actions
     internal static class Logger
     {
+        // Logs specified message to a file
         internal static void Log(string message)
         {
             lock (FileFolderHelper.LogFilePath)
             {
                 StreamWriter writer = null;
                 FileStream file = null;
-
                 try
                 {
                     FileFolderHelper.CheckAndCreateFile(FileFolderHelper.LogFilePath);
@@ -33,27 +34,29 @@ namespace Nameless.NumberConverter.Tools
             }
         }
 
-        internal static void Log(string message, Exception ex)
+        // Logs specified message and exception to a file
+        internal static void Log(string message, Exception e)
         {
-            StringBuilder stringBuilder = new StringBuilder();
+            var stringBuilder = new StringBuilder();
 
             if (message != string.Empty)
                 stringBuilder.AppendLine(message);
 
-            while (ex != null)
+            while (e != null)
             {
-                stringBuilder.AppendLine(ex.Message);
-                stringBuilder.AppendLine(ex.StackTrace);
+                stringBuilder.AppendLine(e.Message);
+                stringBuilder.AppendLine(e.StackTrace);
 
-                ex = ex.InnerException;
+                e = e.InnerException;
             }
 
             Log(stringBuilder.ToString());
         }
 
-        internal static void Log(Exception ex)
+        // Logs specified exception to a file
+        internal static void Log(Exception e)
         {
-            Log("", ex);
+            Log("", e);
         }
     }
 }

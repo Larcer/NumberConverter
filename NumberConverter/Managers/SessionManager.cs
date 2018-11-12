@@ -1,5 +1,4 @@
 ﻿using System;
-
 using Nameless.NumberConverter.Data;
 using Nameless.NumberConverter.Models;
 using Nameless.NumberConverter.Tools;
@@ -7,27 +6,33 @@ using Nameless.NumberConverter.Tools;
 namespace Nameless.NumberConverter.Managers
 {
     // Manages user sessions
-    public class SessionManager : SingletonBase<SessionManager>
+    internal class SessionManager : SingletonBase<SessionManager>
     {
-        public User CurrentUser { get; private set; }
+        // User that is currently logged in
+        internal User CurrentUser { get; private set; }
 
         private SessionManager()
         {
             DeserializeUser();
         }
         
-        public void StartSession(User user)
+        // Starts new user session.
+        // Serializes the user to a file
+        internal void StartSession(User user)
         {
             CurrentUser = user;
             SerializeUser();
         }
         
-        public void EndSession()
+        // Ends user session.
+        // Clears serialized user file
+        internal void EndSession()
         {
             CurrentUser = null;
             DestroySerializedUser();
         }
 
+        // Serializes user to a file
         private void SerializeUser()
         {
             try
@@ -40,6 +45,7 @@ namespace Nameless.NumberConverter.Managers
             }
         }
 
+        // Deserializes user from a file
         private void DeserializeUser()
         {
             User user;
@@ -70,6 +76,7 @@ namespace Nameless.NumberConverter.Managers
             }
         }
 
+        // Clears serialized file
         private void DestroySerializedUser()
         {
             try

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using Nameless.NumberConverter.Tools;
 
 namespace Nameless.NumberConverter.Models
@@ -8,7 +7,7 @@ namespace Nameless.NumberConverter.Models
     [Serializable]
     public class User
     {
-        public Guid Guid { get; }
+        internal Guid Guid { get; }
         public string FirstName { get; }
         public string LastName { get; }
         public string Login { get; }
@@ -29,11 +28,12 @@ namespace Nameless.NumberConverter.Models
             Requests = new List<Request>();
         }
 
-        // Checks if original password matches passed password
-        public bool PasswordMatches(string password)
+        // Checks if original password matches passed password.
+        // Passed password should not be encoded
+        internal bool PasswordMatches(string password)
         {
-            string encryptedPassword = EncryptPassword(password);
-            return Password.Equals(encryptedPassword);
+            var encryptedPassword = EncryptPassword(password);
+            return Password == encryptedPassword;
         }
 
         // Returns encrypted password

@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
-
 using Nameless.NumberConverter.Tools;
 using Nameless.NumberConverter.ViewModels;
 
 namespace Nameless.NumberConverter.Managers
 {
-    // The application windows modes (basically their names)
-    public enum WindowMode
+    // The application windows' modes (basically their names)
+    internal enum WindowMode
     {
         SignIn,
         SignUp,
@@ -16,7 +15,7 @@ namespace Nameless.NumberConverter.Managers
     }
 
     // Handles navigation between windows
-    public class NavigationManager : SingletonBase<NavigationManager>
+    internal class NavigationManager : SingletonBase<NavigationManager>
     {
         // The list of application views
         private readonly IDictionary<WindowMode, ContentControl> _views;
@@ -27,13 +26,12 @@ namespace Nameless.NumberConverter.Managers
         }
 
         // Navigates to the specified view
-        public void Navigate(WindowMode mode)
+        internal void Navigate(WindowMode mode)
         {
-            ContentControl view = _views[mode];
+            var view = _views[mode];
             if (view == null)
                 _views[mode] = (view = CreateWindowMode(mode));
-
-
+            
             ContentWindowViewModel.Instance.ReplaceContent(view);
         }
 
@@ -51,11 +49,11 @@ namespace Nameless.NumberConverter.Managers
         // Uses reflection to create the content control
         private ContentControl CreateWindowMode(WindowMode mode)
         {
-            string fullName = GetFullViewName(mode);
-            Type viewType = Type.GetType(fullName);
-            object viewObject = Activator.CreateInstance(viewType);
+            var fullName = GetFullViewName(mode);
+            var viewType = Type.GetType(fullName);
+            var viewObject = Activator.CreateInstance(viewType);
 
-            return (ContentControl)viewObject;
+            return (ContentControl) viewObject;
         }
 
         // Returns full view name including namespace and suffix 'View'

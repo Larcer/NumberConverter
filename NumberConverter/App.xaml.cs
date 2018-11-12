@@ -14,6 +14,8 @@ namespace Nameless.NumberConverter
         {
             base.OnStartup(e);
 
+
+
             ContentWindowViewModel.Instance.Show();
             NavigationManager.Instance.Navigate(SessionManager.Instance.CurrentUser == null
                 ? WindowMode.SignIn

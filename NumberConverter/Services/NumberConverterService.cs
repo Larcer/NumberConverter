@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
 using Nameless.NumberConverter.Data;
 using Nameless.NumberConverter.Models;
 using Nameless.NumberConverter.Managers;
@@ -9,6 +8,7 @@ using Nameless.NumberConverter.Properties;
 
 namespace Nameless.NumberConverter.Services
 {
+    // Handles numbers converting actions
     public class NumberConverterService
     {
         private readonly IList<(string, uint)> _romanNumbers;
@@ -25,6 +25,9 @@ namespace Nameless.NumberConverter.Services
             };
         }
 
+        // Tries to convert string representation of a number to its unsigned integer representation.
+        // Returns true if the conversion was successful or false otherwise.
+        // Writes result into variable 'result'. If conversion was not successful, 0 will be written
         public bool TryConvertToUintNumber(string number, out uint result)
         {
             result = 0;
@@ -47,6 +50,7 @@ namespace Nameless.NumberConverter.Services
             return false;
         }
 
+        // Converts specified arabic number to roman number
         public string ExecuteConversion(uint number, out Request request)
         {
             string romanRepresentation = ToRoman(number);
@@ -59,28 +63,31 @@ namespace Nameless.NumberConverter.Services
             return romanRepresentation;
         }
 
+        // Converts arabic number to roman number of type string
         private string ToRoman(uint arabicNumber)
         {
-            StringBuilder romanNumber = new StringBuilder();
+            var romanNumberBuilder = new StringBuilder();
             while (arabicNumber != 0)
             {
                 foreach (var (representation, number) in _romanNumbers)
                 {
                     if (arabicNumber >= number)
                     {
-                        romanNumber.Append(representation);
+                        romanNumberBuilder.Append(representation);
                         arabicNumber -= number;
+
                         break;
                     }
                 }
             }
 
-            return romanNumber.ToString();
+            return romanNumberBuilder.ToString();
         }
 
+        // Returns list of user requests
         public IList<Request> GetCurrentUserRequests()
         {
-            User user = SessionManager.Instance.CurrentUser;
+            var user = SessionManager.Instance.CurrentUser;
             MessageManager.Log($"The user \"{user.Login}\" has opened previous requests");
 
             return user.Requests;

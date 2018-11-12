@@ -5,7 +5,7 @@ namespace Nameless.NumberConverter.Models
     [Serializable]
     public class Request
     {
-        public Guid Guid { get; }
+        internal Guid Guid { get; }
         public uint ArabicNumber { get; }
         public string RomanNumber { get; }
         public DateTime RequestDateTime { get; }
