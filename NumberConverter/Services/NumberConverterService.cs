@@ -11,11 +11,11 @@ namespace Nameless.NumberConverter.Services
     // Handles numbers converting actions
     public class NumberConverterService
     {
-        private readonly IList<(string, uint)> _romanNumbers;
+        private readonly IList<(string, int)> _romanNumbers;
 
         public NumberConverterService()
         {
-            _romanNumbers = new List<(string, uint)>()
+            _romanNumbers = new List<(string, int)>()
             {
                 ( "M", 1000 ), ( "CM", 900 ), ( "D", 500 ),
                 ( "CD", 400 ), ( "C", 100 ), ( "XC", 90 ),
@@ -28,12 +28,15 @@ namespace Nameless.NumberConverter.Services
         // Tries to convert string representation of a number to its unsigned integer representation.
         // Returns true if the conversion was successful or false otherwise.
         // Writes result into variable 'result'. If conversion was not successful, 0 will be written
-        public bool TryConvertToUintNumber(string number, out uint result)
+        public bool TryConvertToUintNumber(string number, out int result)
         {
             result = 0;
             try
             {
-                result = Convert.ToUInt32(number);
+                result = Convert.ToInt32(number);
+                if (result < 0)
+                    throw new FormatException();
+            
                 return true;
             }
             catch (OverflowException)
@@ -51,20 +54,23 @@ namespace Nameless.NumberConverter.Services
         }
 
         // Converts specified arabic number to roman number
-        public string ExecuteConversion(uint number, out Request request)
+        public string ExecuteConversion(int number, out Request request)
         {
             string romanRepresentation = ToRoman(number);
-            request = new Request(number, romanRepresentation);
+            User user = SessionManager.Instance.CurrentUser;
 
-            SessionManager.Instance.CurrentUser.Requests.Add(request);
-            DBManager.Instance.UpdateUser(SessionManager.Instance.CurrentUser);
+            request = new Request(number, romanRepresentation);
+            request.UserGuid = user.Guid;
+            DBManager.AddRequest(request);
+            user.Requests.Add(request);
+
             MessageManager.Log($"The user \"{SessionManager.Instance.CurrentUser.Login}\" has executed number conversion: {request}");
 
             return romanRepresentation;
         }
 
         // Converts arabic number to roman number of type string
-        private string ToRoman(uint arabicNumber)
+        private string ToRoman(int arabicNumber)
         {
             var romanNumberBuilder = new StringBuilder();
             while (arabicNumber != 0)

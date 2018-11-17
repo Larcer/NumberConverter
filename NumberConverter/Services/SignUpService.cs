@@ -21,7 +21,7 @@ namespace Nameless.NumberConverter.Services
             }
 
             /* Check email existence */
-            if (DBManager.Instance.EmailExists(user.Email))
+            if (DBManager.EmailExists(user.Email))
             {
                 MessageManager.UserMessage(string.Format(
                     Resources.SignUp_EmailAlreadyExists, user.Email));
@@ -31,7 +31,7 @@ namespace Nameless.NumberConverter.Services
             }
             
             /* Check login existence */
-            if (DBManager.Instance.UserExists(user.Login))
+            if (DBManager.UserExists(user.Login))
             {
                 MessageManager.UserMessage(string.Format(
                     Resources.SignUp_UserAlreadyExists, user.Login));
@@ -40,7 +40,7 @@ namespace Nameless.NumberConverter.Services
                 return false;
             }
 
-            DBManager.Instance.AddUser(user);
+            DBManager.AddUser(user);
             MessageManager.Log($"New user \"{user.Login}\" was signed up");
 
             return true;

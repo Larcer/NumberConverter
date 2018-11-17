@@ -65,14 +65,14 @@ namespace Nameless.NumberConverter.Managers
                 return;
             }
 
-            user = DBManager.Instance.CheckCachedUser(user);
+            user = DBManager.CheckCachedUser(user);
             if (user == null)
                 MessageManager.Log("Failed to relogin last user");
             else
             {
                 CurrentUser = user;
                 CurrentUser.LastLoginDateTime = DateTime.Now;
-                DBManager.Instance.UpdateUser(CurrentUser);
+                DBManager.UpdateUser(CurrentUser);
             }
         }
 

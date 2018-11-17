@@ -35,6 +35,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="FontAwesome.WPF, Version=4.7.0.37774, Culture=neutral, PublicKeyToken=0758b07a11a4f466, processorArchitecture=MSIL">
       <HintPath>..\packages\FontAwesome.WPF.4.7.0.9\lib\net40\FontAwesome.WPF.dll</HintPath>
     </Reference>
@@ -64,10 +70,17 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Data\DBManager.cs" />
+    <Compile Include="Data\EntityWrapper.cs" />
+    <Compile Include="Data\NumberConverterDBContext.cs" />
     <Compile Include="Managers\MessageManager.cs" />
     <Compile Include="Managers\NavigationManager.cs" />
     <Compile Include="Managers\SerializationManager.cs" />
     <Compile Include="Managers\SessionManager.cs" />
+    <Compile Include="Migrations\201811171128327_NumberConverter.cs" />
+    <Compile Include="Migrations\201811171128327_NumberConverter.Designer.cs">
+      <DependentUpon>201811171128327_NumberConverter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Services\NumberConverterService.cs" />
@@ -111,6 +124,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Migrations\201811171128327_NumberConverter.resx">
+      <DependentUpon>201811171128327_NumberConverter.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

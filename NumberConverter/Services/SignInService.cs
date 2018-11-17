@@ -13,7 +13,7 @@ namespace Nameless.NumberConverter.Services
         // Authenticates user in the application
         public bool LoginUser(string login, string password)
         {
-            var currentUser = DBManager.Instance.GetUserByLogin(login);
+            var currentUser = DBManager.GetUserByLogin(login);
             if (currentUser == null)
             {
                 MessageManager.UserMessage(string.Format(
@@ -56,7 +56,7 @@ namespace Nameless.NumberConverter.Services
         private void SaveLastLoginDate(User user)
         {
             user.LastLoginDateTime = DateTime.Now;
-            DBManager.Instance.UpdateUser(user);
+            DBManager.UpdateUser(user);
         }
     }
 }

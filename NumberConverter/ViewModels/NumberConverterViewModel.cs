@@ -107,7 +107,7 @@ namespace Nameless.NumberConverter.ViewModels
             var success = await Task.Run(() =>
             {
                 RomanNumber = string.Empty;
-                if (_service.TryConvertToUintNumber(_arabicNumber, out uint arabicNumber))
+                if (_service.TryConvertToUintNumber(_arabicNumber, out int arabicNumber))
                 {
                     RomanNumber = _service.ExecuteConversion(arabicNumber, out request);
                     return true;

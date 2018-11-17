@@ -1,87 +1,56 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Nameless.NumberConverter.Managers;
-using Nameless.NumberConverter.Models;
-using Nameless.NumberConverter.Tools;
+﻿using Nameless.NumberConverter.Models;
 
 namespace Nameless.NumberConverter.Data
 {
-    // Represents in memory database
-    internal class DBManager : SingletonBase<DBManager>
+    internal static class DBManager
     {
-        // Map of users' logins and users
-        private readonly IDictionary<string, User> _users;
-
-        private DBManager()
-        {
-            _users = DeserializeDB();
-        }
-
         // Returns a user with specified login or null if one does not exist
-        internal User GetUserByLogin(string login)
+        internal static User GetUserByLogin(string login)
         {
-            return UserExists(login) ? _users[login] : null;
+            return EntityWrapper.GetUserByLogin(login);
         }
 
         // Checks if a user with specified login exists
-        internal bool UserExists(string login)
+        internal static bool UserExists(string login)
         {
-            return _users.ContainsKey(login);
+            return EntityWrapper.UserExists(login);
         }
 
         // Checks if specified email exists
-        internal bool EmailExists(string email)
+        internal static bool EmailExists(string email)
         {
-            return _users.FirstOrDefault(userEntry => userEntry.Value.Email == email).Key != null;
+            return EntityWrapper.EmailExists(email);
         }
 
         // Adds new user into the database
-        internal void AddUser(User user)
+        internal static void AddUser(User user)
         {
-            _users.Add(user.Login, user);
-            SaveChanges();
+            EntityWrapper.AddUser(user);
         }
 
         // Updates specified user in the database
-        internal void UpdateUser(User user)
+        internal static void UpdateUser(User user)
         {
-            SaveChanges();
+            EntityWrapper.SaveUser(user);
         }
 
         // Checks if deserialized user exists in the database
-        internal User CheckCachedUser(User user)
+        internal static User CheckCachedUser(User user)
         {
-            if (user?.Login == null || !_users.ContainsKey(user.Login))
+            if (user?.Login == null || !EntityWrapper.UserExists(user.Login))
                 return null;
 
-            var userInStorage = _users[user.Login];
+            var userInStorage = EntityWrapper.GetUserByLogin(user.Login);
             if (userInStorage?.Password != null && userInStorage.Password == user.Password)
                 return userInStorage;
 
             return null;
         }
 
-        // Serializes the database to a file
-        private void SaveChanges()
+        // Adds specified request
+        internal static void AddRequest(Request request)
         {
-            SerializationManager.Serialize(_users, FileFolderHelper.StorageFilePath);
-        }
-
-        // Deserializes the database from a file
-        private IDictionary<string, User> DeserializeDB()
-        {
-            try
-            {
-                return SerializationManager.Deserialize<Dictionary<string, User>>(
-                    FileFolderHelper.StorageFilePath) ?? new Dictionary<string, User>();
-            }
-            catch (Exception e)
-            {
-                MessageManager.Log("Failed to deserialize database", e);
-            }
-
-            return new Dictionary<string, User>();
+            EntityWrapper.AddRequest(request);
         }
     }
 }

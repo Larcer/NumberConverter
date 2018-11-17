@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-
 using Nameless.NumberConverter.Managers;
 using Nameless.NumberConverter.ViewModels;
 
@@ -13,9 +12,7 @@ namespace Nameless.NumberConverter
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-
-
-
+            
             ContentWindowViewModel.Instance.Show();
             NavigationManager.Instance.Navigate(SessionManager.Instance.CurrentUser == null
                 ? WindowMode.SignIn

@@ -14,7 +14,7 @@ namespace Nameless.NumberConverter.ViewModels
 
         internal static ContentWindowViewModel Instance => ContentWindowViewModelHolder.Instance;
 
-        internal Visibility LoaderVisibility
+        public Visibility LoaderVisibility
         {
             get => _loaderVisibility;
             set
@@ -24,7 +24,7 @@ namespace Nameless.NumberConverter.ViewModels
             }
         }
 
-        internal bool IsEnabled
+        public bool IsEnabled
         {
             get => _isEnabled;
             set
